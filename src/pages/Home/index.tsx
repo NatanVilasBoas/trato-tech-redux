@@ -2,16 +2,11 @@ import Header from '../../components/Header';
 import styles from './Home.module.scss';
 import relogio from '../../assets/inicial.png';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { Categoria } from '../../store/reducers/categorias';
-
-interface RootState {
-    categorias: Categoria[]; // Use o tipo que representa o estado do reducer 'categoriasSlice'
-  }
+import { useAppSelector } from '../../app/hooks';
 
 const Home = () => {
     const navigate = useNavigate();
-    const categorias : Categoria[] = useSelector((state: RootState) => state.categorias);
+    const categorias = useAppSelector((state) => state.categorias);
     return (
         <div>
             <Header

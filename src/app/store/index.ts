@@ -10,3 +10,6 @@ const store = configureStore({
 });
 
 export default store;
+// Para Tpescript, envia o tipo de categorias para outros códigos
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>
