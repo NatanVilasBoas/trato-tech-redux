@@ -1,10 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import Header from "../../components/Header";
+import styles from './Categoria.module.scss';
+import Item from "../../components/Item";
 
 const Categoria = () => {
     const { nomeCategoria } = useParams();
-    const categoria = useAppSelector(state => state.categorias.find(categoria => categoria.id === nomeCategoria));
+    const {categoria, itens} = useAppSelector(state => ({
+        categoria: state.categorias.find(categoria => categoria.id === nomeCategoria),
+        itens: state.itens.filter(item => item.categoria === nomeCategoria)
+    }));
     return (
         <div>
             {categoria ?
@@ -17,6 +22,11 @@ const Categoria = () => {
                 :
                 'A Categoria selecionada não foi encontrada :('
             }
+            <div className={styles.itens}>
+                {itens?.map(item => (
+                    <Item key={item.id} {...item}/>
+                ))}
+            </div>
         </div>
     )
 }
