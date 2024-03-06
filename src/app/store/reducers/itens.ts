@@ -244,7 +244,16 @@ const itensSlice = createSlice({
   name: 'itens',
   initialState,
   // criado reducers para evitar erro de incompatibilidade entre o tipo de initialState e as opções passadas para createSlice em relação ao Redux Toolkit.
-  reducers: {}
+  reducers: {
+    changedFavourite: (state, {payload}) => {
+      state.map(item => {
+        if(item.id === payload) item.favorito = !item.favorito;
+        return item;
+      })
+    }
+  }
 });
+
+export const { changedFavourite } = itensSlice.actions;
 
 export default itensSlice.reducer;

@@ -1,7 +1,8 @@
-import { Itens } from '../../app/store/reducers/itens';
+import { Itens, changedFavourite } from '../../app/store/reducers/itens';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaCartPlus } from 'react-icons/fa';
 import styles from './Item.module.scss';
+import { useAppDispatch } from '../../app/hooks';
 
 const iconProps = {
     size: 24,
@@ -9,7 +10,12 @@ const iconProps = {
 }
 
 
-const Item: React.FC<Itens> = ({ titulo, descricao, favorito, foto, preco }) => {
+const Item: React.FC<Itens> = ({ titulo, descricao, favorito, foto, preco, id }) => {
+    const dispatch = useAppDispatch();
+    const onHandleFavourite = () => {
+        dispatch(changedFavourite(id));
+    }
+
     return (
         <div className={styles.item}>
             <div className={styles['item-imagem']}>
@@ -26,8 +32,8 @@ const Item: React.FC<Itens> = ({ titulo, descricao, favorito, foto, preco }) => 
                     </div>
                     <div className={styles['item-acoes']}>
                         {favorito ?
-                            <AiFillHeart {...iconProps} color='#ff0000' className={styles['item-acao']} />
-                            : <AiOutlineHeart {...iconProps} className={styles['item-acao']} />
+                            <AiFillHeart {...iconProps} color='#ff0000' className={styles['item-acao']} onClick={onHandleFavourite} />
+                            : <AiOutlineHeart {...iconProps} className={styles['item-acao']} onClick={onHandleFavourite} />
                         }
                         <FaCartPlus {...iconProps} className={styles['item-acao']} />
                     </div>
