@@ -4,14 +4,19 @@ import { FaCartPlus } from 'react-icons/fa';
 import styles from './Item.module.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { changedCart } from '../../app/store/reducers/carrinho';
+import classNames from 'classnames';
 
 const iconProps = {
     size: 24,
     color: '#041833',
 }
 
+interface Item extends Itens{
+    carrinho: boolean
+}
 
-const Item: React.FC<Itens> = ({ titulo, descricao, favorito, foto, preco, id }) => {
+
+const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, carrinho }) => {
     const dispatch = useAppDispatch();
     const isOnTheCart = useAppSelector(state => state.carrinho.some(cartItem => cartItem.id === id));
 
@@ -24,7 +29,7 @@ const Item: React.FC<Itens> = ({ titulo, descricao, favorito, foto, preco, id })
     }
 
     return (
-        <div className={styles.item}>
+        <div className={classNames(styles.item, {[styles.itemNoCarrinho]: carrinho,})}>
             <div className={styles['item-imagem']}>
                 <img src={foto} alt={titulo} />
             </div>
