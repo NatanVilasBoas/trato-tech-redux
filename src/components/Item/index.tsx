@@ -2,7 +2,8 @@ import { Itens, changedFavourite } from '../../app/store/reducers/itens';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaCartPlus } from 'react-icons/fa';
 import styles from './Item.module.scss';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { changedCart } from '../../app/store/reducers/carrinho';
 
 const iconProps = {
     size: 24,
@@ -12,8 +13,14 @@ const iconProps = {
 
 const Item: React.FC<Itens> = ({ titulo, descricao, favorito, foto, preco, id }) => {
     const dispatch = useAppDispatch();
+    const isOnTheCart = useAppSelector(state => state.carrinho.some(cartItem => cartItem.id === id));
+
     const onHandleFavourite = () => {
         dispatch(changedFavourite(id));
+    }
+
+    const onHandleCartItem = () => {
+        dispatch(changedCart(id));
     }
 
     return (
@@ -35,7 +42,10 @@ const Item: React.FC<Itens> = ({ titulo, descricao, favorito, foto, preco, id })
                             <AiFillHeart {...iconProps} color='#ff0000' className={styles['item-acao']} onClick={onHandleFavourite} />
                             : <AiOutlineHeart {...iconProps} className={styles['item-acao']} onClick={onHandleFavourite} />
                         }
-                        <FaCartPlus {...iconProps} className={styles['item-acao']} />
+                        <FaCartPlus {...iconProps} 
+                            className={styles['item-acao']} 
+                            color={isOnTheCart ? '#1875E8' : iconProps.color}
+                            onClick={onHandleCartItem} />
                     </div>
                 </div>
             </div>
