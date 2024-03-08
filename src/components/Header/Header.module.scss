@@ -6,15 +6,17 @@
   background-size: cover;
   padding: 150px 120px 100px 120px;
   position: relative;
+
   @media(max-width: $tablet) {
     padding-top: 250px;
   }
+
   @media(max-width: $mobile-sm) {
     padding: 250px 50px 100px 50px;
   }
 }
 
-.header {
+.headerWithImage {
   display: grid;
   grid-template-areas: 'texto imagem';
   grid-template-columns: 1fr 2fr;
@@ -53,4 +55,23 @@
       width: 100%;
     }
   }
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo {
+  color: white;
+  font-size: 60px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.descricao {
+  color: white;
+  font-size: 25px;
+  font-weight: 400;
 }
