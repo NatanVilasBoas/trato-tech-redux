@@ -6,10 +6,13 @@ import Item from "../../components/Item";
 
 const Categoria = () => {
     const { nomeCategoria } = useParams();
-    const {categoria, itens} = useAppSelector(state => ({
-        categoria: state.categorias.find(categoria => categoria.id === nomeCategoria),
-        itens: state.itens.filter(item => item.categoria === nomeCategoria)
-    }));
+    const { categoria, itens } = useAppSelector(state => {
+        const regexp = new RegExp(state.busca, 'i');
+        return {
+            categoria: state.categorias.find(categoria => categoria.id === nomeCategoria),
+            itens: state.itens.filter(item => item.categoria === nomeCategoria && item.titulo.match(regexp))
+        }
+    });
     return (
         <div>
             {categoria ?
@@ -24,7 +27,7 @@ const Categoria = () => {
             }
             <div className={styles.itens}>
                 {itens?.map(item => (
-                    <Item key={item.id} {...item}/>
+                    <Item key={item.id} {...item} />
                 ))}
             </div>
         </div>

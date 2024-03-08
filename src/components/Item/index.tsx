@@ -17,8 +17,8 @@ const quantidadeProps = {
 }
 
 interface Item extends Itens {
-    carrinho: boolean,
-    quantidade: number
+    carrinho?: boolean,
+    quantidade?: number
 }
 
 
@@ -58,7 +58,7 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
                                 <div className={styles.quantidade}>
                                     Quantidade:
                                     <AiFillMinusCircle {...quantidadeProps} onClick={() => {
-                                        if (quantidade > 1) {
+                                        if (quantidade && quantidade > 1) {
                                             dispatch(changedAmount({ id, quantidade: -1 }))
                                         } else{
                                             onHandleCartItem()

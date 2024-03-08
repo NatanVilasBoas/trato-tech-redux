@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import categoriasSlice from './reducers/categorias';
 import itensSlice from './reducers/itens';
 import carrinhoSlice from './reducers/carrinho';
+import buscaSlice from './reducers/busca';
 
 // configureStore cria e configura o armazenador das informações
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
         categorias: categoriasSlice,
         itens: itensSlice,
         carrinho: carrinhoSlice,
+        busca: buscaSlice,
     }
 });
 

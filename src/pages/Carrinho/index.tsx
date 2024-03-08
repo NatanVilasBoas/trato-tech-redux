@@ -8,6 +8,7 @@ import { resetCart } from '../../app/store/reducers/carrinho';
 const Carrinho = () => {
     const carrinho = useAppSelector(state => state.carrinho);
     const itens = useAppSelector(state => state.itens);
+    const busca = useAppSelector(state => state.busca);
 
     const dispatch = useAppDispatch();
 
@@ -31,7 +32,8 @@ const Carrinho = () => {
             />
             <div className={styles.carrinho}>
                 {carrinho.map(cartItem => {
-                    const item = itens.find(item => item.id === cartItem.id);
+                    const regexp = new RegExp(busca, 'i');
+                    const item = itens.find(item => item.id === cartItem.id && item.titulo.match(regexp));
                     if (item) {
                         return (
                             <Item
