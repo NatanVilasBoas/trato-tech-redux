@@ -1,26 +1,22 @@
+import { useMemo } from 'react';
 import styles from './Carrinho.module.scss';
 import Header from "../../components/Header";
 import { useAppSelector } from '../../app/hooks';
 import Item from '../../components/Item';
-import { Itens } from '../../app/store/reducers/itens';
-
-export interface CartItem extends Itens{
-    quantidade: number;
-}
 
 const Carrinho = () => {
-    const carrinho = useAppSelector(state => {
-        return state.carrinho.reduce((itens, cartItem) => {
-            const item = state.itens.find(item => item.id === cartItem.id);
+    const carrinho = useAppSelector(state => state.carrinho);
+    const itens = useAppSelector(state => state.itens);
+
+    const total = useMemo(() => {
+        return carrinho.reduce((total, cartItem) => {
+            const item = itens.find(item => item.id === cartItem.id);
             if (item) {
-                itens.push({
-                    ...item,
-                    quantidade: cartItem.quantidade,
-                });
+                total += item.preco * cartItem.quantidade;
             }
-            return itens;
-        }, [] as CartItem[]);
-    });
+            return total;
+        }, 0);
+    }, [carrinho, itens]);
 
     return (
         <div>
@@ -31,18 +27,27 @@ const Carrinho = () => {
                 className=""
             />
             <div className={styles.carrinho}>
-                {carrinho.map(item => <Item key={item.id} {...item} carrinho />)}
+                {carrinho.map(cartItem => {
+                    const item = itens.find(item => item.id === cartItem.id);
+                    if (item) {
+                        return (
+                            <Item
+                                key={item.id}
+                                {...item}
+                                quantidade={cartItem.quantidade}
+                                carrinho
+                            />
+                        );
+                    }
+                    return null;
+                })}
                 <div className={styles.total}>
-                    <strong>
-                        Resumo da compra
-                    </strong>
-                    <span>
-                        Subtotal: <strong> R$ {0.0.toFixed(2)}</strong>
-                    </span>
+                    <strong>Resumo da compra</strong>
+                    <span>Subtotal: <strong>R$ {total.toFixed(2)}</strong></span>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Carrinho;
