@@ -1,12 +1,15 @@
 import { useMemo } from 'react';
 import styles from './Carrinho.module.scss';
 import Header from "../../components/Header";
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import Item from '../../components/Item';
+import { resetCart } from '../../app/store/reducers/carrinho';
 
 const Carrinho = () => {
     const carrinho = useAppSelector(state => state.carrinho);
     const itens = useAppSelector(state => state.itens);
+
+    const dispatch = useAppDispatch();
 
     const total = useMemo(() => {
         return carrinho.reduce((total, cartItem) => {
@@ -45,6 +48,11 @@ const Carrinho = () => {
                     <strong>Resumo da compra</strong>
                     <span>Subtotal: <strong>R$ {total.toFixed(2)}</strong></span>
                 </div>
+                <button className={styles.finalizar}
+                    onClick={() => dispatch(resetCart())}
+                    >
+                Finalizar compra    
+                </button>
             </div>
         </div>
     );

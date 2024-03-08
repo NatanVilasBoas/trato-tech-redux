@@ -31,10 +31,11 @@ const carrinhoSlice = createSlice({
                 if(item.id === payload.id ) item.quantidade += payload.quantidade;
                 return item;
             })
-        }
+        },
+        resetCart: () => initialState,
     }
 })
 
-export const { changedCart, changedAmount } = carrinhoSlice.actions;
+export const { changedCart, changedAmount, resetCart } = carrinhoSlice.actions;
 
 export default carrinhoSlice.reducer;
