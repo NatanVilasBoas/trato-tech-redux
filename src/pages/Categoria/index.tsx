@@ -4,9 +4,9 @@ import styles from './Categoria.module.scss';
 import Item from "../../components/Item";
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { useSelector } from "react-redux";
 import { Categoria as CategoriaType } from "../../app/store/reducers/categorias";
 import { Itens } from "../../app/store/reducers/itens";
+import { useAppSelector } from "../../app/hooks";
 
 // Define um seletor separado para a string de busca
 const selectBusca = (state: RootState) => state.busca;
@@ -34,7 +34,7 @@ const makeSelectCategoriaItens = () =>
 
 const Categoria = () => {
     const selectCategoriaItens = makeSelectCategoriaItens();
-    const { categoria, itens } = useSelector((state: RootState) => selectCategoriaItens(state));
+    const { categoria, itens } = useAppSelector((state) => selectCategoriaItens(state));
 
     return (
         <div>
