@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import { RootState } from "../../app/store";
 import { Categoria } from "../../app/store/reducers/categorias";
 import styles from './Anuncie.module.scss';
+import Button from "../../components/Button";
 
 const makeSelectCategorias = () => 
     createSelector((state: RootState) => state.categorias,
@@ -40,7 +41,9 @@ const Anuncie = () => {
                 </select>
                 <label htmlFor="preco">Preço do produto:</label>
                 <input placeholder="Informe o preço" name="preco" alt="preço do produto" />
-                <button>Anunciar produto</button>
+                <Button type="submit">
+                    Anunciar produto
+                </Button>
             </form>
         </div>
     )

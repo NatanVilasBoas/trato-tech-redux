@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import Item from '../../components/Item';
 import { resetCart } from '../../app/store/reducers/carrinho';
+import Button from '../../components/Button';
 
 const Carrinho = () => {
     const carrinho = useAppSelector(state => state.carrinho);
@@ -50,11 +51,9 @@ const Carrinho = () => {
                     <strong>Resumo da compra</strong>
                     <span>Subtotal: <strong>R$ {total.toFixed(2)}</strong></span>
                 </div>
-                <button className={styles.finalizar}
-                    onClick={() => dispatch(resetCart())}
-                    >
+                <Button type='button' onClick={() => dispatch(resetCart())}>
                 Finalizar compra    
-                </button>
+                </Button>
             </div>
         </div>
     );
