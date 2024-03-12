@@ -1,11 +1,12 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Header from "../../components/Header";
 import { RootState } from "../../app/store";
 import { Categoria } from "../../app/store/reducers/categorias";
 import styles from './Anuncie.module.scss';
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
+import { Itens, createdItem } from "../../app/store/reducers/itens";
 
 const makeSelectCategorias = () =>
     createSelector((state: RootState) => state.categorias,
@@ -14,21 +15,30 @@ const makeSelectCategorias = () =>
         }
     )
 
+export interface newItem{
+    nome: string,
+    descricao: string,
+    imagem: string,
+    categoria: string,
+    preco: number
+}
+
 const Anuncie = () => {
+    const dispatch = useAppDispatch();
     const selectCategorias = makeSelectCategorias();
     const categorias = useAppSelector(state => selectCategorias(state));
     const { register, handleSubmit, formState } = useForm({
         defaultValues: {
             categoria: '',
-            nome: '',
+            titulo: '',
             descricao: '',
-            imagem: '',
-            preco: '',
+            foto: '',
+            preco: 0,
         }
     });
 
-    const cadastrar = (params: object) => {
-        console.log(params)
+    const cadastrar = (data: Itens) => {
+        dispatch(createdItem(data));
     }
 
     const { errors } = formState;
@@ -42,17 +52,17 @@ const Anuncie = () => {
                 imagem=""
             />
             <form className={styles.formulario} onSubmit={handleSubmit(cadastrar)}>
-                <label htmlFor="nome">Nome do Produto:</label>
-                {errors.nome && <span className={styles['mensagem-erro']}> {errors.nome.message} </span>}
-                <input className={errors.nome ? styles['input-erro'] : ''} {...register('nome', { required: 'É necessário preencher o nome do produto' })} placeholder="Insira o nome do produto" name="nome" alt="nome do produto" />
+                <label htmlFor="titulo">Nome do Produto:</label>
+                {errors.titulo && <span className={styles['mensagem-erro']}> {errors.titulo.message} </span>}
+                <input className={errors.titulo ? styles['input-erro'] : ''} {...register('titulo', { required: 'É necessário preencher o nome do produto' })} placeholder="Insira o nome do produto" name="titulo" alt="nome do produto" />
 
                 <label htmlFor="descricao">Descrição do Produto:</label>
                 {errors.descricao && <span className={styles['mensagem-erro']}> {errors.descricao.message} </span>}
                 <input className={errors.descricao ? styles['input-erro'] : ''} {...register('descricao', { required: 'É necessário preencher o campo com a descrição do produto' })} placeholder="Insira a descrição do produto" name="descricao" alt="descrição do produto" />
 
-                <label htmlFor="imagem">URL da imagem do produto:</label>
-                {errors.imagem && <span className={styles['mensagem-erro']}> {errors.imagem.message} </span>}
-                <input className={errors.imagem ? styles['input-erro'] : ''} {...register('imagem', { required: 'É necessário preencher o campo com a URL da imagem do produto' })} placeholder="Insira a URL da imagem" name="imagem" alt="URL da imagem do produto" />
+                <label htmlFor="foto">URL da imagem do produto:</label>
+                {errors.foto && <span className={styles['mensagem-erro']}> {errors.foto.message} </span>}
+                <input className={errors.foto ? styles['input-erro'] : ''} {...register('foto', { required: 'É necessário preencher o campo com a URL da imagem do produto' })} placeholder="Insira a URL da imagem" name="foto" alt="URL da imagem do produto" />
 
                 <label htmlFor="categoria">Categoria do produto:</label>
                 {errors.categoria && <span className={styles['mensagem-erro']}> {errors.categoria.message} </span>}

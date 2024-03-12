@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import assistenteVirtual from '../../../assets/itens/assistente-virtual.png';
 import airpod from '../../../assets/itens/airpod.png';
@@ -30,9 +30,9 @@ export interface Itens {
     titulo: string;
     descricao: string;
     foto: string;
-    favorito: boolean;
+    favorito?: boolean;
     preco: number;
-    id: string;
+    id?: string;
     categoria: string;
 }
 
@@ -250,10 +250,13 @@ const itensSlice = createSlice({
         if(item.id === payload) item.favorito = !item.favorito;
         return item;
       })
+    },
+    createdItem: (state, action: PayloadAction<Itens>) => {
+      state.push({...action.payload, id: uuid(), favorito: false})
     }
   }
 });
 
-export const { changedFavourite } = itensSlice.actions;
+export const { changedFavourite, createdItem } = itensSlice.actions;
 
 export default itensSlice.reducer;
