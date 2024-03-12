@@ -63,7 +63,7 @@ const Anuncie = () => {
                 <select
                     className={errors.categoria ? styles['input-erro'] : ''}
                     {...register('categoria', { required: 'É necessário selecionar a categoria' })}
-                    name="categoria" disabled={nomeCategoria.length > 0}>
+                    name="categoria" disabled={!!nomeCategoria}>
                     <option value='' disabled>Selecione uma categoria</option>
                     {categorias.map(categoria => {
                         return <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
