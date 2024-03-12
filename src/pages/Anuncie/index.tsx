@@ -7,6 +7,7 @@ import styles from './Anuncie.module.scss';
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { Itens, createdItem } from "../../app/store/reducers/itens";
+import { useParams } from "react-router-dom";
 
 const makeSelectCategorias = () =>
     createSelector((state: RootState) => state.categorias,
@@ -15,21 +16,14 @@ const makeSelectCategorias = () =>
         }
     )
 
-export interface newItem{
-    nome: string,
-    descricao: string,
-    imagem: string,
-    categoria: string,
-    preco: number
-}
-
 const Anuncie = () => {
     const dispatch = useAppDispatch();
+    const { nomeCategoria = '' } = useParams();
     const selectCategorias = makeSelectCategorias();
     const categorias = useAppSelector(state => selectCategorias(state));
     const { register, handleSubmit, formState } = useForm({
         defaultValues: {
-            categoria: '',
+            categoria: nomeCategoria,
             titulo: '',
             descricao: '',
             foto: '',
@@ -66,7 +60,10 @@ const Anuncie = () => {
 
                 <label htmlFor="categoria">Categoria do produto:</label>
                 {errors.categoria && <span className={styles['mensagem-erro']}> {errors.categoria.message} </span>}
-                <select className={errors.categoria ? styles['input-erro'] : ''} {...register('categoria', { required: 'É necessário selecionar a categoria' })} name="categoria">
+                <select
+                    className={errors.categoria ? styles['input-erro'] : ''}
+                    {...register('categoria', { required: 'É necessário selecionar a categoria' })}
+                    name="categoria" disabled={nomeCategoria.length > 0}>
                     <option value='' disabled>Selecione uma categoria</option>
                     {categorias.map(categoria => {
                         return <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>

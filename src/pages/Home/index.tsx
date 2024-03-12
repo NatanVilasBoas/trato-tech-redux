@@ -3,6 +3,7 @@ import styles from './Home.module.scss';
 import relogio from '../../assets/inicial.png';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
+import Button from '../../components/Button';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -14,7 +15,11 @@ const Home = () => {
                 descricao='Compre diversos tipos de produtos no melhor site do Brasil!'
                 className={styles.header}
                 imagem={relogio}
-            />
+            >
+                <Button type="button" onClick={() => navigate('/anuncie')}>
+                    Quero anunciar
+                </Button>
+            </Header>
             <div className={styles.categorias}>
                 <div className={styles['container-title']}>
                     <h1>Categorias</h1>

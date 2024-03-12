@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import styles from './Header.module.scss';
 
 
@@ -5,10 +6,11 @@ interface Props {
     titulo: string,
     descricao: string,
     className: string,
-    imagem: string
+    imagem: string,
+    children?: ReactNode,
 }
 
-const Header = ({ titulo, descricao, className = '', imagem }: Props) => {
+const Header = ({ titulo, descricao, className = '', imagem, children }: Props) => {
     return (
         <header className={`${styles.header}`}>
             {imagem !== '' &&
@@ -16,6 +18,7 @@ const Header = ({ titulo, descricao, className = '', imagem }: Props) => {
                 <div className={styles['headerWithImage-texto']}>
                   <h1>{titulo}</h1>
                   <h2>{descricao}</h2>
+                  {children}
                 </div>
                 <div className={styles['headerWithImage-imagem']}>
                   <img

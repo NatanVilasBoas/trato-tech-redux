@@ -25,7 +25,12 @@
     }
   
     &-imagem {
+      height: 160px;
+      width: 335px;
       margin: 0 auto;
+      &img{
+        height: 100%;
+      }
     }
   
     &-info {

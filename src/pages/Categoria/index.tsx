@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import styles from './Categoria.module.scss';
 import Item from "../../components/Item";
@@ -7,6 +7,7 @@ import { RootState } from "../../app/store";
 import { Categoria as CategoriaType } from "../../app/store/reducers/categorias";
 import { Itens } from "../../app/store/reducers/itens";
 import { useAppSelector } from "../../app/hooks";
+import Button from "../../components/Button";
 
 // Define um seletor separado para a string de busca
 const selectBusca = (state: RootState) => state.busca;
@@ -33,8 +34,10 @@ const makeSelectCategoriaItens = () =>
     );
 
 const Categoria = () => {
+    const { nomeCategoria } = useParams();
     const selectCategoriaItens = makeSelectCategoriaItens();
     const { categoria, itens } = useAppSelector((state) => selectCategoriaItens(state));
+    const navigate = useNavigate();
 
     return (
         <div>
@@ -44,7 +47,11 @@ const Categoria = () => {
                     descricao={categoria.descricao}
                     imagem={categoria.header}
                     className=''
-                />
+                >
+                    <Button type="button" onClick={() => navigate(`/anuncie/${nomeCategoria}`)}>
+                        Anuncie seu produto
+                    </Button>
+                </Header>
                 :
                 'A Categoria selecionada não foi encontrada :('
             }
