@@ -75,7 +75,7 @@ const Anuncie = () => {
 
                 <label htmlFor="preco">Preço do produto:</label>
                 {errors.preco && <span className={styles['mensagem-erro']}> {errors.preco.message} </span>}
-                <input className={errors.preco ? styles['input-erro'] : ''} {...register('preco', { required: 'É necessário preencher o campo com o valor do produto' })} type="number" placeholder="Informe o preço" name="preco" alt="preço do produto" />
+                <input className={errors.preco ? styles['input-erro'] : ''} {...register('preco', { required: 'É necessário preencher o campo com o valor do produto', valueAsNumber: true })} type="number" placeholder="Informe o preço" name="preco" alt="preço do produto" />
 
                 <Button type="submit">
                     Anunciar produto
