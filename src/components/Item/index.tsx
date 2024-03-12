@@ -1,10 +1,11 @@
 import { Itens, changedFavourite } from '../../app/store/reducers/itens';
-import { AiOutlineHeart, AiFillHeart, AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart, AiFillMinusCircle, AiFillPlusCircle, AiOutlineCheck, AiFillEdit } from 'react-icons/ai';
 import { FaCartPlus } from 'react-icons/fa';
 import styles from './Item.module.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { changedAmount, changedCart } from '../../app/store/reducers/carrinho';
 import classNames from 'classnames';
+import { useState } from 'react';
 
 const iconProps = {
     size: 24,
@@ -21,8 +22,9 @@ interface Item extends Itens {
     quantidade?: number
 }
 
-
 const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, carrinho, quantidade }) => {
+    const [editable, setEditable] = useState(false);
+    const [ newTitle, setNewTitle ] = useState(titulo);
     const dispatch = useAppDispatch();
     const isOnTheCart = useAppSelector(state => state.carrinho.some(cartItem => cartItem.id === id));
 
@@ -34,6 +36,15 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
         dispatch(changedCart(id));
     }
 
+    const componentEdit =
+    <>
+        {editable ?
+            <AiOutlineCheck {...iconProps} className={styles['item-acao']} onClick={() => setEditable(false)} />
+            :
+            <AiFillEdit {...iconProps} className={styles['item-acao']} onClick={() => setEditable(true)} />
+        }
+    </>
+
     return (
         <div className={classNames(styles.item, { [styles.itemNoCarrinho]: carrinho, })}>
             <div className={styles['item-imagem']}>
@@ -41,7 +52,10 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
             </div>
             <div className={styles['item-descricao']}>
                 <div className={styles['item-titulo']}>
-                    <h2>{titulo}</h2>
+                    {editable 
+                    ?   <input value={newTitle} onChange={(e) => setNewTitle(e.target.value)}/>
+                    : <h2>{titulo}</h2>
+                    }
                     <p>{descricao}</p>
                 </div>
                 <div className={styles['item-info']}>
@@ -60,7 +74,7 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
                                     <AiFillMinusCircle {...quantidadeProps} onClick={() => {
                                         if (quantidade && quantidade > 1) {
                                             dispatch(changedAmount({ id, quantidade: -1 }))
-                                        } else{
+                                        } else {
                                             onHandleCartItem()
                                         }
                                     }} />
@@ -69,10 +83,14 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
                                 </div>
                             )
 
-                            : (<FaCartPlus {...iconProps}
-                                className={styles['item-acao']}
-                                color={isOnTheCart ? '#1875E8' : iconProps.color}
-                                onClick={onHandleCartItem} />
+                            : (
+                                <>
+                                    <FaCartPlus {...iconProps}
+                                        className={styles['item-acao']}
+                                        color={isOnTheCart ? '#1875E8' : iconProps.color}
+                                        onClick={onHandleCartItem} />
+                                        {componentEdit}
+                                </>
                             )
                         }
                     </div>
