@@ -18,7 +18,7 @@ const Header = ({ titulo, descricao, className = '', imagem, children }: Props) 
 
   const buscarCategorias = useCallback(async () =>  {
     const response = await instance.get('/categorias');
-    dispatch(addedCategorias(response));
+    dispatch(addedCategorias(response.data));
   }, [dispatch])
   
 
