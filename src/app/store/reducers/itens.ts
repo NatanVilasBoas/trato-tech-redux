@@ -255,7 +255,8 @@ const itensSlice = createSlice({
       state.push({...action.payload, id: uuid(), favorito: false})
     },
     changedItem: (state, {payload}) => {
-      console.log(payload);
+      const index = state.findIndex(item => item.id === payload.id);
+      Object.assign(state[index], payload.item);
     }
   }
 });
