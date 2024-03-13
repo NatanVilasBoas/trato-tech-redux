@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { Itens, createdItem } from "../../app/store/reducers/itens";
 import { useParams } from "react-router-dom";
+import Input from "../../components/Input";
 
 const makeSelectCategorias = () =>
     createSelector((state: RootState) => state.categorias,
@@ -47,19 +48,46 @@ const Anuncie = () => {
             />
             <form className={styles.formulario} onSubmit={handleSubmit(cadastrar)}>
                 <label htmlFor="titulo">Nome do Produto:</label>
-                {errors.titulo && <span className={styles['mensagem-erro']}> {errors.titulo.message} </span>}
-                <input className={errors.titulo ? styles['input-erro'] : ''} {...register('titulo', { required: 'É necessário preencher o nome do produto' })} placeholder="Insira o nome do produto" name="titulo" alt="nome do produto" />
+                {errors.titulo &&
+                    <span className={styles['mensagem-erro']}>
+                        {errors.titulo.message}
+                    </span>}
+                <Input
+                    className={errors.titulo ? styles['input-erro'] : ''}
+                    {...register('titulo', { required: 'É necessário preencher o nome do produto' })}
+                    placeholder="Insira o nome do produto"
+                    name="titulo"
+                    alt="nome do produto" />
 
                 <label htmlFor="descricao">Descrição do Produto:</label>
-                {errors.descricao && <span className={styles['mensagem-erro']}> {errors.descricao.message} </span>}
-                <input className={errors.descricao ? styles['input-erro'] : ''} {...register('descricao', { required: 'É necessário preencher o campo com a descrição do produto' })} placeholder="Insira a descrição do produto" name="descricao" alt="descrição do produto" />
+                {errors.descricao &&
+                    <span className={styles['mensagem-erro']}>
+                        {errors.descricao.message}
+                    </span>}
+                <Input
+                    className={errors.descricao ? styles['input-erro'] : ''}
+                    {...register('descricao', { required: 'É necessário preencher o campo com a descrição do produto' })}
+                    placeholder="Insira a descrição do produto"
+                    name="descricao"
+                    alt="descrição do produto" />
 
                 <label htmlFor="foto">URL da imagem do produto:</label>
-                {errors.foto && <span className={styles['mensagem-erro']}> {errors.foto.message} </span>}
-                <input className={errors.foto ? styles['input-erro'] : ''} {...register('foto', { required: 'É necessário preencher o campo com a URL da imagem do produto' })} placeholder="Insira a URL da imagem" name="foto" alt="URL da imagem do produto" />
+                {errors.foto &&
+                    <span className={styles['mensagem-erro']}>
+                        {errors.foto.message}
+                    </span>}
+                <Input
+                    className={errors.foto ? styles['input-erro'] : ''}
+                    {...register('foto', { required: 'É necessário preencher o campo com a URL da imagem do produto' })}
+                    placeholder="Insira a URL da imagem"
+                    name="foto"
+                    alt="URL da imagem do produto" />
 
                 <label htmlFor="categoria">Categoria do produto:</label>
-                {errors.categoria && <span className={styles['mensagem-erro']}> {errors.categoria.message} </span>}
+                {errors.categoria &&
+                    <span className={styles['mensagem-erro']}>
+                        {errors.categoria.message}
+                    </span>}
                 <select
                     className={errors.categoria ? styles['input-erro'] : ''}
                     {...register('categoria', { required: 'É necessário selecionar a categoria' })}
@@ -71,8 +99,17 @@ const Anuncie = () => {
                 </select>
 
                 <label htmlFor="preco">Preço do produto:</label>
-                {errors.preco && <span className={styles['mensagem-erro']}> {errors.preco.message} </span>}
-                <input className={errors.preco ? styles['input-erro'] : ''} {...register('preco', { required: 'É necessário preencher o campo com o valor do produto', valueAsNumber: true })} type="number" placeholder="Informe o preço" name="preco" alt="preço do produto" />
+                {errors.preco &&
+                    <span className={styles['mensagem-erro']}>
+                        {errors.preco.message}
+                    </span>}
+                <Input
+                    className={errors.preco ? styles['input-erro'] : ''}
+                    {...register('preco', { required: 'É necessário preencher o campo com o valor do produto', valueAsNumber: true })}
+                    type="number"
+                    placeholder="Informe o preço"
+                    name="preco"
+                    alt="preço do produto" />
 
                 <Button type="submit">
                     Anunciar produto

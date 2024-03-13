@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { changedAmount, changedCart } from '../../app/store/reducers/carrinho';
 import classNames from 'classnames';
 import { useState } from 'react';
+import Input from '../Input';
 
 const iconProps = {
     size: 24,
@@ -53,7 +54,7 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
             <div className={styles['item-descricao']}>
                 <div className={styles['item-titulo']}>
                     {editable 
-                    ?   <input value={newTitle} onChange={(e) => setNewTitle(e.target.value)}/>
+                    ?   <Input value={newTitle} onChange={(e) => setNewTitle(e.target.value)}/>
                     : <h2>{titulo}</h2>
                     }
                     <p>{descricao}</p>
