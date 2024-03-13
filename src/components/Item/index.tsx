@@ -1,5 +1,5 @@
-import { Itens, changedFavourite, changedItem } from '../../app/store/reducers/itens';
-import { AiOutlineHeart, AiFillHeart, AiFillMinusCircle, AiFillPlusCircle, AiOutlineCheck, AiFillEdit } from 'react-icons/ai';
+import { Itens, changedFavourite, changedItem, deletedItem } from '../../app/store/reducers/itens';
+import { AiFillCloseCircle, AiOutlineHeart, AiFillHeart, AiFillMinusCircle, AiFillPlusCircle, AiOutlineCheck, AiFillEdit } from 'react-icons/ai';
 import { FaCartPlus } from 'react-icons/fa';
 import styles from './Item.module.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -39,8 +39,9 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
 
     const onChangeItem = () => {
         setEditable(false);
-        dispatch(changedItem({id, 
-        item: {titulo: newTitle}
+        dispatch(changedItem({
+            id,
+            item: { titulo: newTitle }
         }))
     }
 
@@ -55,6 +56,11 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
 
     return (
         <div className={classNames(styles.item, { [styles.itemNoCarrinho]: carrinho, })}>
+            <AiFillCloseCircle
+                {...iconProps}
+                className={`${styles['item-acao']} ${styles['item-deletar']}`}
+                onClick={() => dispatch(deletedItem(id))}
+            />
             <div className={styles['item-imagem']}>
                 <img src={foto} alt={titulo} />
             </div>
@@ -74,22 +80,33 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
                     </div>
                     <div className={styles['item-acoes']}>
                         {favorito ?
-                            <AiFillHeart {...iconProps} color='#ff0000' className={styles['item-acao']} onClick={onHandleFavourite} />
-                            : <AiOutlineHeart {...iconProps} className={styles['item-acao']} onClick={onHandleFavourite} />
+                            <AiFillHeart
+                                {...iconProps}
+                                color='#ff0000'
+                                className={styles['item-acao']}
+                                onClick={onHandleFavourite} />
+                            : <AiOutlineHeart
+                                {...iconProps}
+                                className={styles['item-acao']}
+                                onClick={onHandleFavourite} />
                         }
                         {carrinho
                             ? (
                                 <div className={styles.quantidade}>
                                     Quantidade:
-                                    <AiFillMinusCircle {...quantidadeProps} onClick={() => {
-                                        if (quantidade && quantidade > 1) {
-                                            dispatch(changedAmount({ id, quantidade: -1 }))
-                                        } else {
-                                            onHandleCartItem()
-                                        }
-                                    }} />
+                                    <AiFillMinusCircle
+                                        {...quantidadeProps}
+                                        onClick={() => {
+                                            if (quantidade && quantidade > 1) {
+                                                dispatch(changedAmount({ id, quantidade: -1 }))
+                                            } else {
+                                                onHandleCartItem()
+                                            }
+                                        }} />
                                     <span>{String(quantidade || 0).padStart(2, '0')}</span>
-                                    <AiFillPlusCircle {...quantidadeProps} onClick={() => dispatch(changedAmount({ id, quantidade: +1 }))} />
+                                    <AiFillPlusCircle
+                                        {...quantidadeProps}
+                                        onClick={() => dispatch(changedAmount({ id, quantidade: +1 }))} />
                                 </div>
                             )
 

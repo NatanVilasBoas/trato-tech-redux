@@ -4,8 +4,13 @@
   display: flex;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.08));
   flex-direction: column;
-  overflow: hidden;
   width: 335px;
+
+  &-deletar{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+  }
 
   &-descricao {
     background-color: #EFF9FF;
@@ -44,6 +49,7 @@
 
   &-imagem {
     height: 160px;
+    overflow: hidden;
     width: 335px;
     margin: 0 auto;
 
