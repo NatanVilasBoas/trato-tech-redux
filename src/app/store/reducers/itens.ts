@@ -253,10 +253,13 @@ const itensSlice = createSlice({
     },
     createdItem: (state, action: PayloadAction<Itens>) => {
       state.push({...action.payload, id: uuid(), favorito: false})
+    },
+    changedItem: (state, {payload}) => {
+      console.log(payload);
     }
   }
 });
 
-export const { changedFavourite, createdItem } = itensSlice.actions;
+export const { changedFavourite, createdItem, changedItem } = itensSlice.actions;
 
 export default itensSlice.reducer;

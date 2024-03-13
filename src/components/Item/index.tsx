@@ -1,4 +1,4 @@
-import { Itens, changedFavourite } from '../../app/store/reducers/itens';
+import { Itens, changedFavourite, changedItem } from '../../app/store/reducers/itens';
 import { AiOutlineHeart, AiFillHeart, AiFillMinusCircle, AiFillPlusCircle, AiOutlineCheck, AiFillEdit } from 'react-icons/ai';
 import { FaCartPlus } from 'react-icons/fa';
 import styles from './Item.module.scss';
@@ -25,7 +25,7 @@ interface Item extends Itens {
 
 const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, carrinho, quantidade }) => {
     const [editable, setEditable] = useState(false);
-    const [ newTitle, setNewTitle ] = useState(titulo);
+    const [newTitle, setNewTitle] = useState(titulo);
     const dispatch = useAppDispatch();
     const isOnTheCart = useAppSelector(state => state.carrinho.some(cartItem => cartItem.id === id));
 
@@ -37,14 +37,21 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
         dispatch(changedCart(id));
     }
 
+    const onChangeItem = () => {
+        setEditable(false);
+        dispatch(changedItem({id, 
+        item: {titulo: newTitle}
+        }))
+    }
+
     const componentEdit =
-    <>
-        {editable ?
-            <AiOutlineCheck {...iconProps} className={styles['item-acao']} onClick={() => setEditable(false)} />
-            :
-            <AiFillEdit {...iconProps} className={styles['item-acao']} onClick={() => setEditable(true)} />
-        }
-    </>
+        <>
+            {editable ?
+                <AiOutlineCheck {...iconProps} className={styles['item-acao']} onClick={() => onChangeItem()} />
+                :
+                <AiFillEdit {...iconProps} className={styles['item-acao']} onClick={() => setEditable(true)} />
+            }
+        </>
 
     return (
         <div className={classNames(styles.item, { [styles.itemNoCarrinho]: carrinho, })}>
@@ -53,9 +60,11 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
             </div>
             <div className={styles['item-descricao']}>
                 <div className={styles['item-titulo']}>
-                    {editable 
-                    ?   <Input value={newTitle} onChange={(e) => setNewTitle(e.target.value)}/>
-                    : <h2>{titulo}</h2>
+                    {editable
+                        ? <Input
+                            value={newTitle}
+                            onChange={(e) => setNewTitle(e.target.value)} />
+                        : <h2>{titulo}</h2>
                     }
                     <p>{descricao}</p>
                 </div>
@@ -90,7 +99,7 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
                                         className={styles['item-acao']}
                                         color={isOnTheCart ? '#1875E8' : iconProps.color}
                                         onClick={onHandleCartItem} />
-                                        {componentEdit}
+                                    {componentEdit}
                                 </>
                             )
                         }
