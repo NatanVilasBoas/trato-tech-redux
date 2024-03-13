@@ -3,6 +3,7 @@ import styles from './Header.module.scss';
 import instance from '../../common/config/api';
 import { useAppDispatch } from '../../app/hooks';
 import { addedCategorias } from '../../app/store/reducers/categorias';
+import { addedItens } from '../../app/store/reducers/itens';
 
 
 interface Props {
@@ -21,10 +22,15 @@ const Header = ({ titulo, descricao, className = '', imagem, children }: Props) 
     dispatch(addedCategorias(response.data));
   }, [dispatch])
   
+  const buscarItens = useCallback(async () => {
+    const response = await instance.get('/itens');
+    dispatch(addedItens(response.data));
+  }, [dispatch])
 
   useEffect(() => {
     buscarCategorias();
-  }, [buscarCategorias])
+    buscarItens();
+  }, [buscarCategorias, buscarItens])
 
   return (
     <header className={`${styles.header}`}>
