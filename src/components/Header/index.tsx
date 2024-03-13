@@ -1,6 +1,8 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useCallback, useEffect } from 'react';
 import styles from './Header.module.scss';
 import instance from '../../common/config/api';
+import { useAppDispatch } from '../../app/hooks';
+import { addedCategorias } from '../../app/store/reducers/categorias';
 
 
 interface Props {
@@ -11,17 +13,19 @@ interface Props {
   children?: ReactNode,
 }
 
-async function buscarCategorias() {
-  const response = await instance.get('/categorias');
-
-  console.log(response);
-}
-
 const Header = ({ titulo, descricao, className = '', imagem, children }: Props) => {
+  const dispatch = useAppDispatch();
+
+  const buscarCategorias = useCallback(async () =>  {
+    const response = await instance.get('/categorias');
+    dispatch(addedCategorias(response));
+  }, [dispatch])
+  
 
   useEffect(() => {
     buscarCategorias();
-  }, [])
+  }, [buscarCategorias])
+
   return (
     <header className={`${styles.header}`}>
       {imagem !== '' &&
