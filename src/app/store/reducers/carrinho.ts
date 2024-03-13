@@ -5,7 +5,7 @@ export interface CarrinhoItem {
     quantidade: number
 }
 
-export interface CarrinhoState extends Array<CarrinhoItem>{}
+export interface CarrinhoState extends Array<CarrinhoItem> { }
 
 const initialState: CarrinhoState = [];
 
@@ -13,9 +13,9 @@ const carrinhoSlice = createSlice({
     name: 'carrinho',
     initialState,
     reducers: {
-        changedCart: (state, {payload}) => {
+        changedCart: (state, { payload }) => {
             const hasItem = state.some(item => item.id === payload);
-            if(hasItem){
+            if (hasItem) {
                 return state.filter(item => item.id !== payload);
             }
             return [
@@ -26,9 +26,9 @@ const carrinhoSlice = createSlice({
                 }
             ]
         },
-        changedAmount: (state, {payload}) => {
+        changedAmount: (state, { payload }) => {
             state.map(item => {
-                if(item.id === payload.id ) item.quantidade += payload.quantidade;
+                if (item.id === payload.id) item.quantidade += payload.quantidade;
                 return item;
             })
         },

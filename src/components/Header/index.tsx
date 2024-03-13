@@ -1,9 +1,8 @@
 import { ReactNode, useEffect } from 'react';
 import styles from './Header.module.scss';
 import { useAppDispatch } from '../../app/hooks';
-import {buscarCategorias } from '../../app/store/reducers/categorias';
+import { buscarCategorias } from '../../app/store/reducers/categorias';
 import { buscarItens } from '../../app/store/reducers/itens';
-
 
 interface Props {
   titulo: string,

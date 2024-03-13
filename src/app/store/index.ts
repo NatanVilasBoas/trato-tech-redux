@@ -7,7 +7,7 @@ import buscaSlice from './reducers/busca';
 // configureStore cria e configura o armazenador das informações
 const store = configureStore({
     //reducer são os pequenos pedaços de dados armazenados
-    reducer:{
+    reducer: {
         categorias: categoriasSlice,
         itens: itensSlice,
         carrinho: carrinhoSlice,

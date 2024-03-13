@@ -23,14 +23,14 @@ const categoriasSlice = createSlice({
   initialState,
   // criado reducers para evitar erro de incompatibilidade entre o tipo de initialState e as opções passadas para createSlice em relação ao Redux Toolkit.
   reducers: {
-    addedCategorias: (state, {payload}) => {
+    addedCategorias: (state, { payload }) => {
       state.push(...payload);
     }
   },
   extraReducers: builder => {
     builder.addCase(
       buscarCategorias.fulfilled,
-      (state, {payload}) => {
+      (state, { payload }) => {
         state.push(...payload);
       }
     )
@@ -38,5 +38,5 @@ const categoriasSlice = createSlice({
 });
 
 
-export const {addedCategorias}  = categoriasSlice.actions;
+export const { addedCategorias } = categoriasSlice.actions;
 export default categoriasSlice.reducer;
