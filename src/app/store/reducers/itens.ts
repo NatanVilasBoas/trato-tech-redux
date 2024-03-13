@@ -1,5 +1,6 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
+import itensService from '../../../services/itens';
 
 export interface Itens {
   titulo: string;
@@ -13,6 +14,11 @@ export interface Itens {
 
 
 const initialState: Itens[] = [];
+
+export const buscarItens = createAsyncThunk(
+  'itens/buscar',
+  itensService.buscar
+)
 
 // createSlice cria um pedaço do reducers do store em Redux
 const itensSlice = createSlice({
@@ -33,13 +39,21 @@ const itensSlice = createSlice({
       const index = state.findIndex(item => item.id === payload.id);
       Object.assign(state[index], payload.item);
     },
-    deletedItem: (state, {payload}) => {
+    deletedItem: (state, { payload }) => {
       const index = state.findIndex(item => item.id === payload);
       state.splice(index, 1);
     },
-    addedItens: (state, {payload}) => {
+    addedItens: (state, { payload }) => {
       state.push(...payload)
     }
+  },
+  extraReducers: builder => {
+    builder.addCase(
+      buscarItens.fulfilled,
+      (state, { payload }) => {
+        state.push(...payload)
+      }
+    )
   }
 });
 

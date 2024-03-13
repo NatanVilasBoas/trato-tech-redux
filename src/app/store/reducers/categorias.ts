@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import categoriasService from '../../../services/categorias';
 
 
 export interface Categoria {
@@ -9,8 +10,12 @@ export interface Categoria {
   descricao: string;
 }
 
-
 const initialState: Categoria[] = [];
+
+export const buscarCategorias = createAsyncThunk(
+  'categorias/buscar',
+  categoriasService.buscar
+);
 
 // createSlice cria um pedaço do reducers do store em Redux
 const categoriasSlice = createSlice({
@@ -21,6 +26,14 @@ const categoriasSlice = createSlice({
     addedCategorias: (state, {payload}) => {
       state.push(...payload);
     }
+  },
+  extraReducers: builder => {
+    builder.addCase(
+      buscarCategorias.fulfilled,
+      (state, {payload}) => {
+        state.push(...payload);
+      }
+    )
   }
 });
 
