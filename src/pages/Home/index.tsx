@@ -14,8 +14,8 @@ const Home = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-      dispatch(buscarCategorias());
-      dispatch(buscarItens());
+        dispatch(buscarCategorias());
+        dispatch(buscarItens());
     }, [dispatch])
 
     return (

@@ -52,7 +52,7 @@ const Carrinho = () => {
                     <span>Subtotal: <strong>R$ {total.toFixed(2)}</strong></span>
                 </div>
                 <Button type='button' onClick={() => dispatch(resetCart())}>
-                Finalizar compra    
+                    Finalizar compra
                 </Button>
             </div>
         </div>
