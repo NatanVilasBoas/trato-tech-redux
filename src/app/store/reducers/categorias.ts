@@ -34,8 +34,7 @@ const categoriasSlice = createSlice({
             title: 'Sucesso!',
             description: 'Categorias carregadas!',
             status: 'success',
-            duration: 2000,
-            isClosable: true,
+            duration: 1500,
           })
           return payload;
         }
@@ -47,8 +46,7 @@ const categoriasSlice = createSlice({
             title: 'Carregando...',
             description: 'Carregando Categorias',
             status: 'loading',
-            duration: 2000,
-            isClosable: true,
+            duration: 1500,
           })
         }
       )
@@ -59,8 +57,7 @@ const categoriasSlice = createSlice({
             title: 'Erro!',
             description: 'Consulta a Categorias rejeitada',
             status: 'error',
-            duration: 2000,
-            isClosable: true,
+            duration: 1500,
           })
         }
       )

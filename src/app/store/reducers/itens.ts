@@ -1,6 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import itensService from '../../../services/itens';
+import { createStandaloneToast } from '@chakra-ui/react';
+
+const { toast } = createStandaloneToast();
 
 export interface Itens {
   titulo: string;
@@ -11,7 +14,6 @@ export interface Itens {
   id?: string;
   categoria: string;
 }
-
 
 const initialState: Itens[] = [];
 
@@ -28,7 +30,8 @@ const itensSlice = createSlice({
   reducers: {
     changedFavourite: (state, { payload }) => {
       state.map(item => {
-        if (item.id === payload) item.favorito = !item.favorito;
+        if (item.id === payload){ 
+          return item.favorito = !item.favorito}
         return item;
       })
     },
@@ -37,21 +40,31 @@ const itensSlice = createSlice({
     },
     changedItem: (state, { payload }) => {
       const index = state.findIndex(item => item.id === payload.id);
+      toast({
+        title: 'Item editado!',
+        duration: 1500,
+         status: 'success',
+      })
       Object.assign(state[index], payload.item);
     },
     deletedItem: (state, { payload }) => {
       const index = state.findIndex(item => item.id === payload);
       state.splice(index, 1);
+      toast({
+        title: 'Item excluído!',
+        duration: 1500,
+         status: 'warning',
+      })
     },
   },
   extraReducers: builder => {
     builder
-    .addCase(
-      buscarItens.fulfilled,
-      (_, { payload }) => {
-        return payload;
-      }
-    )
+      .addCase(
+        buscarItens.fulfilled,
+        (_, { payload }) => {
+          return payload;
+        }
+      )
   }
 });
 
