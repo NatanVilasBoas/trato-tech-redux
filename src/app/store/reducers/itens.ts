@@ -43,20 +43,17 @@ const itensSlice = createSlice({
       const index = state.findIndex(item => item.id === payload);
       state.splice(index, 1);
     },
-    addedItens: (state, { payload }) => {
-      state.push(...payload)
-    }
   },
   extraReducers: builder => {
     builder.addCase(
       buscarItens.fulfilled,
-      (state, { payload }) => {
-        state.push(...payload)
+      (_, { payload }) => {
+        return payload;
       }
     )
   }
 });
 
-export const { changedFavourite, createdItem, changedItem, deletedItem, addedItens } = itensSlice.actions;
+export const { changedFavourite, createdItem, changedItem, deletedItem } = itensSlice.actions;
 
 export default itensSlice.reducer;

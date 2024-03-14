@@ -5,10 +5,10 @@ import { buscarCategorias } from '../../app/store/reducers/categorias';
 import { buscarItens } from '../../app/store/reducers/itens';
 
 interface Props {
-  titulo: string,
-  descricao: string,
+  titulo: string | undefined,
+  descricao: string | undefined,
   className: string,
-  imagem: string,
+  imagem: string | undefined,
   children?: ReactNode,
 }
 
