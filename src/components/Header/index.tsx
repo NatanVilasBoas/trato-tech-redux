@@ -1,8 +1,5 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import styles from './Header.module.scss';
-import { useAppDispatch } from '../../app/hooks';
-import { buscarCategorias } from '../../app/store/reducers/categorias';
-import { buscarItens } from '../../app/store/reducers/itens';
 
 interface Props {
   titulo: string | undefined,
@@ -13,12 +10,6 @@ interface Props {
 }
 
 const Header = ({ titulo, descricao, className = '', imagem, children }: Props) => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(buscarCategorias());
-    dispatch(buscarItens());
-  }, [dispatch])
 
   return (
     <header className={`${styles.header}`}>

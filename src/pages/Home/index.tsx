@@ -2,12 +2,22 @@ import Header from '../../components/Header';
 import styles from './Home.module.scss';
 import relogio from '../../assets/inicial.png';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Button from '../../components/Button';
+import { useEffect } from 'react';
+import { buscarCategorias } from '../../app/store/reducers/categorias';
+import { buscarItens } from '../../app/store/reducers/itens';
 
 const Home = () => {
     const navigate = useNavigate();
     const categorias = useAppSelector((state) => state.categorias);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+      dispatch(buscarCategorias());
+      dispatch(buscarItens());
+    }, [dispatch])
+
     return (
         <div>
             <Header
