@@ -4,9 +4,9 @@ import styles from './Categoria.module.scss';
 import Item from "../../components/Item";
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { Categoria as CategoriaType } from "../../app/store/reducers/categorias";
-import { Itens } from "../../app/store/reducers/itens";
-import { useAppSelector } from "../../app/hooks";
+import { Categoria as CategoriaType, buscarCategorias } from "../../app/store/reducers/categorias";
+import { Itens, buscarItens } from "../../app/store/reducers/itens";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Button from "../../components/Button";
 
 // Define um seletor separado para a string de busca
@@ -38,23 +38,25 @@ const Categoria = () => {
     const selectCategoriaItens = makeSelectCategoriaItens();
     const { categoria, itens } = useAppSelector((state) => selectCategoriaItens(state));
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    if (!categoria) {
+        dispatch(buscarCategorias());
+        dispatch(buscarItens());
+    }
 
     return (
         <div>
-            {categoria ?
-                <Header
-                    titulo={categoria.nome}
-                    descricao={categoria.descricao}
-                    imagem={categoria.header}
-                    className=''
-                >
-                    <Button type="button" onClick={() => navigate(`/anuncie/${nomeCategoria}`)}>
-                        Anuncie seu produto
-                    </Button>
-                </Header>
-                :
-                'A Categoria selecionada não foi encontrada :('
-            }
+            <Header
+                titulo={categoria?.nome}
+                descricao={categoria?.descricao}
+                imagem={categoria?.header}
+                className=''
+            >
+                <Button type="button" onClick={() => navigate(`/anuncie/${nomeCategoria}`)}>
+                    Anuncie seu produto
+                </Button>
+            </Header>
             <div className={styles.itens}>
                 {itens?.map(item => (
                     <Item key={item.id} {...item} />
