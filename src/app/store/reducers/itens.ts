@@ -30,20 +30,27 @@ const itensSlice = createSlice({
   reducers: {
     changedFavourite: (state, { payload }) => {
       state.map(item => {
-        if (item.id === payload){ 
-          return item.favorito = !item.favorito}
+        if (item.id === payload) {
+          return item.favorito = !item.favorito
+        }
         return item;
       })
     },
     createdItem: (state, action: PayloadAction<Itens>) => {
       state.push({ ...action.payload, id: uuid(), favorito: false })
+      toast({
+        title: 'Item Anunciado!',
+        description: 'Novo item anunciado com sucesso!',
+        duration: 1500,
+        status: 'success',
+      })
     },
     changedItem: (state, { payload }) => {
       const index = state.findIndex(item => item.id === payload.id);
       toast({
         title: 'Item editado!',
         duration: 1500,
-         status: 'success',
+        status: 'success',
       })
       Object.assign(state[index], payload.item);
     },
@@ -53,7 +60,7 @@ const itensSlice = createSlice({
       toast({
         title: 'Item excluído!',
         duration: 1500,
-         status: 'warning',
+        status: 'warning',
       })
     },
   },

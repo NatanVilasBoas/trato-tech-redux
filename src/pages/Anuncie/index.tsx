@@ -2,12 +2,12 @@ import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Header from "../../components/Header";
 import { RootState } from "../../app/store";
-import { Categoria } from "../../app/store/reducers/categorias";
+import { Categoria, buscarCategorias } from "../../app/store/reducers/categorias";
 import styles from './Anuncie.module.scss';
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { Itens, createdItem } from "../../app/store/reducers/itens";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../components/Input";
 
 const makeSelectCategorias = () =>
@@ -32,11 +32,19 @@ const Anuncie = () => {
         }
     });
 
+    const navigate = useNavigate();
+
     const cadastrar = (data: Itens) => {
         dispatch(createdItem(data));
+
+        navigate(-1);
     }
 
     const { errors } = formState;
+
+    if (categorias.length < 1) {
+        dispatch(buscarCategorias());
+    }
 
     return (
         <div>
