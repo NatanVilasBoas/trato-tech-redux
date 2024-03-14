@@ -4,7 +4,7 @@ Este é um projeto de um marketplace de uma empresa online.
 
 Neste projeto é possível criar produtos, adicioná-los ao carrinho, editá-los e excluí-los.
 
-Para vê-lo em ação, basta acessar este link:
+Para vê-lo em ação, basta acessar este link: https://trato-tech-redux-nxp3w0rky-natan-vilas-boas-projects.vercel.app/
 
 O projeto foi feito em conjunto com a Alura, porém desenvolvido em Typescript e Vite.
 
