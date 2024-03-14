@@ -1,5 +1,5 @@
 import styles from './Footer.module.scss';
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaBehance, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const iconProps = {
     color: 'white',
@@ -7,15 +7,21 @@ const iconProps = {
 }
 
 const Footer = () => {
-    return(
+    return (
         <footer className={styles.footer}>
             <div>
-                <FaFacebook {...iconProps}/>
-                <FaTwitter {...iconProps}/>
-                <FaInstagram {...iconProps}/>
+                <a href='https://www.behance.net/natancarvalho2' target='blank'>
+                    <FaBehance  {...iconProps} cursor='pointer' />
+                </a>
+                <a href='https://github.com/NatanVilasBoas' target='blank'>
+                    <FaGithub  {...iconProps} cursor='pointer' />
+                </a>
+                <a href='https://www.linkedin.com/in/natan-vilas-boas-00b102224/' target='blank'>
+                    <FaLinkedin  {...iconProps} cursor='pointer' />
+                </a>
             </div>
             <span>
-                Desenvolvido por Natan Vilas Boas.
+                Desenvolvido por <a href='https://github.com/NatanVilasBoas/trato-tech-redux' target='blank'>Natan Vilas Boas</a>.
             </span>
         </footer>
     )
