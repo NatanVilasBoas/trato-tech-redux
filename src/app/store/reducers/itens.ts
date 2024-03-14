@@ -45,7 +45,8 @@ const itensSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(
+    builder
+    .addCase(
       buscarItens.fulfilled,
       (_, { payload }) => {
         return payload;

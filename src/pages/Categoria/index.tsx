@@ -41,17 +41,20 @@ const Categoria = () => {
 
     return (
         <div>
-            <Header
-                titulo={categoria?.nome}
-                descricao={categoria?.descricao}
-                imagem={categoria?.header}
-                className=''
-            >
-                <Button type="button" onClick={() => navigate(`/anuncie/${nomeCategoria}`)}>
-                    Anuncie seu produto
-                </Button>
-            </Header>
-
+            {categoria ?
+                <Header
+                    titulo={categoria.nome}
+                    descricao={categoria.descricao}
+                    imagem={categoria.header}
+                    className=''
+                >
+                    <Button type="button" onClick={() => navigate(`/anuncie/${nomeCategoria}`)}>
+                        Anuncie seu produto
+                    </Button>
+                </Header>
+                :
+                'A Categoria selecionada não foi encontrada :('
+            }
             <div className={styles.itens}>
                 {itens?.map(item => (
                     <Item key={item.id} {...item} />
