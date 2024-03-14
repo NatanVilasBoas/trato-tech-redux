@@ -56,11 +56,16 @@ const Item: React.FC<Item> = ({ titulo, descricao, favorito, foto, preco, id, ca
 
     return (
         <div className={classNames(styles.item, { [styles.itemNoCarrinho]: carrinho, })}>
-            <AiFillCloseCircle
-                {...iconProps}
-                className={`${styles['item-acao']} ${styles['item-deletar']}`}
-                onClick={() => dispatch(deletedItem(id))}
-            />
+            {!carrinho ?
+                <AiFillCloseCircle
+                    {...iconProps}
+                    className={`${styles['item-acao']} ${styles['item-deletar']}`}
+                    onClick={() => dispatch(deletedItem(id))}
+                />
+                :
+                ''
+            }
+
             <div className={styles['item-imagem']}>
                 <img src={foto} alt={titulo} />
             </div>
