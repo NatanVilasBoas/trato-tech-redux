@@ -1,8 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import categoriasService from '../../../services/categorias';
-import { createStandaloneToast } from '@chakra-ui/react';
-
-const {toast} = createStandaloneToast();
 
 export interface Categoria {
   nome: string;
@@ -14,6 +11,8 @@ export interface Categoria {
 
 const initialState: Categoria[] = [];
 
+export const carregarCategorias = createAction('cateborias/carregarCategorias')
+
 export const buscarCategorias = createAsyncThunk(
   'categorias/buscar',
   categoriasService.buscar
@@ -24,43 +23,13 @@ const categoriasSlice = createSlice({
   name: 'categorias',
   initialState,
   // criado reducers para evitar erro de incompatibilidade entre o tipo de initialState e as opções passadas para createSlice em relação ao Redux Toolkit.
-  reducers: {},
-  extraReducers: builder => {
-    builder
-      .addCase(
-        buscarCategorias.fulfilled,
-        (_, { payload }) => {
-          toast({
-            title: 'Sucesso!',
-            description: 'Categorias carregadas!',
-            status: 'success',
-            duration: 1500,
-          })
-          return payload;
-        }
-      )
-      .addCase(
-        buscarCategorias.pending,
-        () => {
-          toast({
-            title: 'Carregando...',
-            description: 'Carregando Categorias',
-            status: 'loading',
-            duration: 1500,
-          })
-        }
-      )
-      .addCase(
-        buscarCategorias.rejected,
-        () => {
-          toast({
-            title: 'Erro!',
-            description: 'Consulta a Categorias rejeitada',
-            status: 'error',
-            duration: 1500,
-          })
-        }
-      )
+  reducers: {
+    adicionarTodasAsCategorias: (state, { payload }) => {
+      return payload;
+    }
   }
 });
+
+export const { adicionarTodasAsCategorias } = categoriasSlice.actions;
+
 export default categoriasSlice.reducer;

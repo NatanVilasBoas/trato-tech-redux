@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Button from '../../components/Button';
 import { useEffect } from 'react';
-import { buscarCategorias } from '../../app/store/reducers/categorias';
+import { carregarCategorias } from '../../app/store/reducers/categorias';
 import { buscarItens } from '../../app/store/reducers/itens';
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(buscarCategorias());
+        dispatch(carregarCategorias());
         dispatch(buscarItens());
     }, [dispatch])
 
