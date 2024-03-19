@@ -5,6 +5,11 @@ const categoriasService = {
     const resposta = await instance.get('/categorias');
 
     return resposta.data;
+  },
+  buscarUmaCategoria: async (nomeCategoria: string | undefined) => {
+    const resposta = await instance.get(`/categorias/${nomeCategoria}`);
+
+    return resposta.data;
   }
 }
 

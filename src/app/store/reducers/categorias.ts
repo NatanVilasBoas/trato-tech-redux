@@ -12,6 +12,7 @@ export interface Categoria {
 const initialState: Categoria[] = [];
 
 export const carregarCategorias = createAction('cateborias/carregarCategorias')
+export const carregarUmaCategoria = createAction('cateborias/carregarUmaCategoria')
 
 export const buscarCategorias = createAsyncThunk(
   'categorias/buscar',
@@ -24,12 +25,15 @@ const categoriasSlice = createSlice({
   initialState,
   // criado reducers para evitar erro de incompatibilidade entre o tipo de initialState e as opções passadas para createSlice em relação ao Redux Toolkit.
   reducers: {
-    adicionarTodasAsCategorias: (state, { payload }) => {
+    adicionarTodasAsCategorias: (_, { payload }) => {
       return payload;
+    },
+    adicionarUmaCategoria: (state, { payload }) => {
+      state.push(payload);
     }
   }
 });
 
-export const { adicionarTodasAsCategorias } = categoriasSlice.actions;
+export const { adicionarTodasAsCategorias, adicionarUmaCategoria } = categoriasSlice.actions;
 
 export default categoriasSlice.reducer;
