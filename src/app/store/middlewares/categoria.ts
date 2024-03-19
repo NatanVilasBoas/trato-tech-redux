@@ -2,6 +2,7 @@ import { createListenerMiddleware } from "@reduxjs/toolkit";
 import { adicionarTodasAsCategorias, adicionarUmaCategoria, carregarCategorias, carregarUmaCategoria } from "../reducers/categorias";
 import categoriasService from "../../../services/categorias";
 import criarTarefa from "./utils/criarTarefa";
+import { RootState } from "..";
 
 export const categoriasListener = createListenerMiddleware();
 
@@ -27,12 +28,12 @@ categoriasListener.startListening({
 categoriasListener.startListening({
     actionCreator: carregarUmaCategoria,
     effect: async (action, { fork, dispatch, getState, unsubscribe, }) => {
-        const { categorias } = getState();
+        const state: RootState = getState();
         const nomeCategoria = action.payload;
-        const categoriaCarregada = categorias.some(categoria => categoria.id === nomeCategoria);
+        const categoriaCarregada = state.categorias.some(categoria => categoria.id === nomeCategoria);
 
         if (categoriaCarregada) return;
-        if (categorias.length === 5) return unsubscribe();
+        if (state.categorias.length === 5) return unsubscribe();
 
         await criarTarefa({
             fork,

@@ -3,18 +3,19 @@ import { carregarUmaCategoria } from "../reducers/categorias";
 import criarTarefa from "./utils/criarTarefa";
 import itensService from "../../../services/itens";
 import { addedItems } from "../reducers/itens";
+import { RootState } from "..";
 
 export const itensListener = createListenerMiddleware();
 
 itensListener.startListening({
     actionCreator: carregarUmaCategoria,
     effect: async (action, { fork, dispatch, getState, unsubscribe}) => {
-        const {itens} = getState();
+        const state: RootState = getState();
 
-        if(itens.length === 25) return unsubscribe();
+        if(state.itens.length === 25) return unsubscribe();
 
         const nomeCategoria = action.payload;
-        const itensCarregados = itens.some(item => item.categoria === nomeCategoria);
+        const itensCarregados = state.itens.some(item => item.categoria === nomeCategoria);
 
         if(itensCarregados) return;
 
