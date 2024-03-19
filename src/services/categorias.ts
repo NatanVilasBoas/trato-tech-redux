@@ -6,7 +6,7 @@ const categoriasService = {
 
     return resposta.data;
   },
-  buscarUmaCategoria: async (nomeCategoria: string | undefined) => {
+  buscarUmaCategoria: async (nomeCategoria: string) => {
     const resposta = await instance.get(`/categorias/${nomeCategoria}`);
 
     return resposta.data;

@@ -6,8 +6,8 @@ const { toast } = createStandaloneToast();
 interface Props{
     fork: <T>(executor: ForkedTaskExecutor<T>, options?: | undefined) => ForkedTask<T>,
     dispatch: ThunkDispatch<unknown, unknown, UnknownAction>,
-    action: ActionCreatorWithPayload<"categorias/adicionarTodasAsCategorias">,
-    busca: () => Promise<any>,
+    action: ActionCreatorWithPayload<JSON>,
+    busca: () => Promise<JSON>,
     textoCarregando: string,
     textoSucesso: string,
     textoErro: string,
@@ -51,4 +51,6 @@ export default async function criarTarefa({
             duration: 1500,
         })
     }
+
+    return resposta;
 }

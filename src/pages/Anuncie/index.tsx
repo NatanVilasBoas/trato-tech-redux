@@ -2,13 +2,14 @@ import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Header from "../../components/Header";
 import { RootState } from "../../app/store";
-import { Categoria, buscarCategorias } from "../../app/store/reducers/categorias";
+import { Categoria, carregarCategorias, carregarUmaCategoria } from "../../app/store/reducers/categorias";
 import styles from './Anuncie.module.scss';
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { Itens, createdItem } from "../../app/store/reducers/itens";
 import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../components/Input";
+import { useEffect } from "react";
 
 const makeSelectCategorias = () =>
     createSelector((state: RootState) => state.categorias,
@@ -32,6 +33,11 @@ const Anuncie = () => {
         }
     });
 
+    useEffect(() => {
+        dispatch(
+            nomeCategoria ? carregarUmaCategoria(nomeCategoria) : carregarCategorias())
+    }, [dispatch, nomeCategoria])
+
     const navigate = useNavigate();
 
     const cadastrar = (data: Itens) => {
@@ -41,10 +47,6 @@ const Anuncie = () => {
     }
 
     const { errors } = formState;
-
-    if (categorias.length < 1) {
-        dispatch(buscarCategorias());
-    }
 
     return (
         <div>
@@ -101,8 +103,8 @@ const Anuncie = () => {
                     {...register('categoria', { required: 'É necessário selecionar a categoria' })}
                     name="categoria" disabled={!!nomeCategoria}>
                     <option value='' disabled>Selecione uma categoria</option>
-                    {categorias.map(categoria => {
-                        return <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
+                    {categorias.map((categoria, index) => {
+                        return <option key={index} value={categoria.id}>{categoria.nome}</option>
                     })}
                 </select>
 

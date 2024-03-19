@@ -3,13 +3,13 @@ import { adicionarTodasAsCategorias, adicionarUmaCategoria, carregarCategorias, 
 import categoriasService from "../../../services/categorias";
 import criarTarefa from "./utils/criarTarefa";
 
-export const listener = createListenerMiddleware();
+export const categoriasListener = createListenerMiddleware();
 
-listener.startListening({
+categoriasListener.startListening({
     actionCreator: carregarCategorias,
     effect: async (_, { dispatch, fork, unsubscribe }) => {
 
-        await criarTarefa({
+        const resposta = await criarTarefa({
             fork,
             dispatch,
             action: adicionarTodasAsCategorias,
@@ -18,14 +18,22 @@ listener.startListening({
             textoSucesso: 'Categorias carregadas!',
             textoErro: 'Consulta a Categorias rejeitada'
         })
-        unsubscribe();
+        if (resposta.status === 'ok') {
+            unsubscribe();
+        }
     }
 })
 
-listener.startListening({
+categoriasListener.startListening({
     actionCreator: carregarUmaCategoria,
-    effect: async (action, { fork, dispatch}) => {
+    effect: async (action, { fork, dispatch, getState, unsubscribe }) => {
+        const { categorias } = getState();
         const nomeCategoria = action.payload;
+        const categoriaCarregada = categorias.some(categoria => categoria.id === nomeCategoria);
+
+        if (categoriaCarregada) return;
+        if (categorias.length === 5) return unsubscribe();
+
         await criarTarefa({
             fork,
             dispatch,
