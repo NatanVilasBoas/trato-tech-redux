@@ -44,7 +44,9 @@ const Categoria = () => {
     const dispatch = useAppDispatch();
     
     useEffect(() => {
-        dispatch(carregarUmaCategoria(nomeCategoria));
+        if(nomeCategoria){
+            dispatch(carregarUmaCategoria(nomeCategoria));
+        }
     }, [dispatch, nomeCategoria])
 
     return (

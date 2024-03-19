@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Button from '../../components/Button';
 import { useEffect } from 'react';
 import { carregarCategorias } from '../../app/store/reducers/categorias';
-import { buscarItens } from '../../app/store/reducers/itens';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -15,7 +14,6 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(carregarCategorias());
-        dispatch(buscarItens());
     }, [dispatch])
 
     return (

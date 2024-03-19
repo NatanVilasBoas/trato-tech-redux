@@ -3,7 +3,8 @@ import categoriasSlice from './reducers/categorias';
 import itensSlice from './reducers/itens';
 import carrinhoSlice from './reducers/carrinho';
 import buscaSlice from './reducers/busca';
-import { listener } from "./middlewares/categoria";
+import { categoriasListener } from "./middlewares/categoria";
+import { itensListener } from "./middlewares/itens";
 
 // configureStore cria e configura o armazenador das informações
 const store = configureStore({
@@ -14,7 +15,7 @@ const store = configureStore({
         carrinho: carrinhoSlice,
         busca: buscaSlice,
     },
-    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(listener.middleware),
+    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(categoriasListener.middleware, itensListener.middleware),
 });
 
 export default store;

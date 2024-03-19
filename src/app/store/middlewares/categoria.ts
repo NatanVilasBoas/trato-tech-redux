@@ -26,7 +26,7 @@ categoriasListener.startListening({
 
 categoriasListener.startListening({
     actionCreator: carregarUmaCategoria,
-    effect: async (action, { fork, dispatch, getState, unsubscribe }) => {
+    effect: async (action, { fork, dispatch, getState, unsubscribe, }) => {
         const { categorias } = getState();
         const nomeCategoria = action.payload;
         const categoriaCarregada = categorias.some(categoria => categoria.id === nomeCategoria);

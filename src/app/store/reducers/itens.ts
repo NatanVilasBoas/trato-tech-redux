@@ -63,6 +63,9 @@ const itensSlice = createSlice({
         status: 'warning',
       })
     },
+    addedItems: (state, {payload}) => {
+      state.push(...payload);
+    }
   },
   extraReducers: builder => {
     builder
@@ -75,6 +78,6 @@ const itensSlice = createSlice({
   }
 });
 
-export const { changedFavourite, createdItem, changedItem, deletedItem } = itensSlice.actions;
+export const { changedFavourite, createdItem, changedItem, deletedItem, addedItems } = itensSlice.actions;
 
 export default itensSlice.reducer;
