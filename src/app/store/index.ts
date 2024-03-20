@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import categoriasSlice from './reducers/categorias';
-import itensSlice from './reducers/itens';
-import carrinhoSlice from './reducers/carrinho';
+import categoriasSlice, { Categoria } from './reducers/categorias';
+import itensSlice, { Itens } from './reducers/itens';
+import carrinhoSlice, { CarrinhoState } from './reducers/carrinho';
 import buscaSlice from './reducers/busca';
 import { categoriasListener } from "./middlewares/categoria";
 import { itensListener } from "./middlewares/itens";
@@ -21,4 +21,9 @@ const store = configureStore({
 export default store;
 // Para Tpescript, envia o tipo de categorias para outros códigos
 export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>
+export interface RootState {
+    categorias: Categoria[];
+    itens: Itens[];
+    carrinho: CarrinhoState;
+    busca: string;
+}

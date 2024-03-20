@@ -5,9 +5,9 @@ import itensService from "../../../services/itens";
 import { addedItems } from "../reducers/itens";
 import { RootState } from "..";
 
-export const itensListener = createListenerMiddleware();
+const itensListenerMiddleware = createListenerMiddleware<RootState>();
 
-itensListener.startListening({
+itensListenerMiddleware.startListening({
     actionCreator: carregarUmaCategoria,
     effect: async (action, { fork, dispatch, getState, unsubscribe}) => {
         const state: RootState = getState();
@@ -30,3 +30,5 @@ itensListener.startListening({
         })
     }
 })
+
+export const itensListener = itensListenerMiddleware;

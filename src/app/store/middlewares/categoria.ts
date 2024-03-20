@@ -4,9 +4,9 @@ import categoriasService from "../../../services/categorias";
 import criarTarefa from "./utils/criarTarefa";
 import { RootState } from "..";
 
-export const categoriasListener = createListenerMiddleware();
+const categoriasListenerMiddleware = createListenerMiddleware<RootState>();
 
-categoriasListener.startListening({
+categoriasListenerMiddleware.startListening({
     actionCreator: carregarCategorias,
     effect: async (_, { dispatch, fork, unsubscribe }) => {
 
@@ -25,7 +25,7 @@ categoriasListener.startListening({
     }
 })
 
-categoriasListener.startListening({
+categoriasListenerMiddleware.startListening({
     actionCreator: carregarUmaCategoria,
     effect: async (action, { fork, dispatch, getState, unsubscribe, }) => {
         const state: RootState = getState();
@@ -46,3 +46,5 @@ categoriasListener.startListening({
         })
     }
 })
+
+export const categoriasListener = categoriasListenerMiddleware;
