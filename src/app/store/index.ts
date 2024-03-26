@@ -5,6 +5,10 @@ import carrinhoSlice, { CarrinhoState } from './reducers/carrinho';
 import buscaSlice from './reducers/busca';
 import { categoriasListener } from "./middlewares/categoria";
 import { itensListener } from "./middlewares/itens";
+import createSagaMiddleware from 'redux-saga';
+import { categoriasSaga } from "./sagas/categorias";
+
+const sagaMiddleware = createSagaMiddleware();
 
 // configureStore cria e configura o armazenador das informações
 const store = configureStore({
@@ -15,8 +19,16 @@ const store = configureStore({
         carrinho: carrinhoSlice,
         busca: buscaSlice,
     },
-    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(categoriasListener.middleware, itensListener.middleware),
+    middleware:
+        getDefaultMiddleware =>
+            getDefaultMiddleware().prepend(
+                categoriasListener.middleware,
+                itensListener.middleware,
+                sagaMiddleware
+            ),
 });
+
+sagaMiddleware.run(categoriasSaga);
 
 export default store;
 // Para Tpescript, envia o tipo de categorias para outros códigos
